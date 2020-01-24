@@ -3,16 +3,46 @@ import express from "express";
 import compression from "compression";
 import * as sapper from "@sapper/server";
 import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
+
+const getUser = req => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  if (token) {
+    let decoded;
+    try {
+      decoded = jwt.verify(token, "4TvMZCZoBWfRrbK2e6xSIOoC1leN7pX9"); // FIXME: Get secret key from configuration
+    } catch (e) {
+      console.log("Error verifying JWT token", e);
+    }
+
+    if (decoded) {
+      return { username: decoded.username };
+    }
+  }
+};
 
 express()
   .use(express.json(), cookieParser())
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
-    sapper.middleware()
+    sapper.middleware({
+      session: (req, res) => ({
+        user: getUser(req)
+      })
+    })
   )
   .listen(PORT, err => {
     if (err) console.log("error", err);

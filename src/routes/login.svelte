@@ -1,8 +1,7 @@
 <script>
-  import { goto, stores } from "@sapper/app";
+  import { goto } from "@sapper/app";
   import post from "./_fetch.js";
-
-  const { session } = stores();
+  import { user } from "./_store.js";
 
   let username = "";
   let password = "";
@@ -12,7 +11,7 @@
     // TODO handle network errors
     // errors = response.errors;
     if (response.user) {
-      $session.user = response.user;
+      $user = user;
       goto("/");
     }
   }
