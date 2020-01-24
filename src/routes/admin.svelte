@@ -4,5 +4,5 @@
 </script>
 
 {#if $user}
-  This is protected page, you are {$user}
+  This is protected page, you are {$user.username}
 {:else}{goto('/login')}{/if}

@@ -12,15 +12,13 @@
         headers: {
           "Content-Type": "application/json"
         },
-        body:
-          username && password ? JSON.stringify({ username, password }) : null
+        body: JSON.stringify({ username, password })
       });
-      const json = await response.json();
+      const decode = await response.json();
       // TODO handle network errors
       // errors = response.errors;
-      if (json.user) {
-        $user = response.user;
-        // user.set(response.user);
+      if (decode.user) {
+        $user = decode.user;
         goto("/admin");
       }
     } catch (e) {
