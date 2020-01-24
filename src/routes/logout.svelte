@@ -1,26 +1,21 @@
 <script>
   import { user } from "./_store.js";
   import { restCall } from "./_fetch.js";
+  import { goto } from "@sapper/app";
 
-  localStorage.removeItem("sapper"); // FIXME: Do not hardcode storage key
+  localStorage.clear();
 
   async function logout() {
-    const response = await restCall(`auth/logout`, "DELETE", {
-      username: user.username
-    });
+    const response = await restCall(`auth/logout`, "DELETE");
     // TODO handle network errors
     // errors = response.errors;
-    if (response.user) {
-      $user = user;
-      goto("/");
-    }
   }
 </script>
 
 {#await logout()}
   <p>logging out</p>
-{:then items}
-  <p>Logged out</p>
+{:then}
+  {console.log('HERE')} {goto('.')}
 {:catch error}
-  <p style="color: red">{error.message}</p>
+  <p style="color: red">{error}</p>
 {/await}
