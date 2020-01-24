@@ -1,17 +1,20 @@
 <script>
   import { goto } from "@sapper/app";
-  import post from "./_fetch.js";
+  import { restCall } from "./_fetch.js";
   import { user } from "./_store.js";
 
   let username = "";
   let password = "";
 
-  async function submit(event) {
-    const response = await post(`auth/login`, "POST", { username, password });
+  async function submit() {
+    const response = await restCall(`auth/login`, "POST", {
+      username,
+      password
+    });
     // TODO handle network errors
     // errors = response.errors;
     if (response.user) {
-      $user = user;
+      $user = response.user;
       goto("/");
     }
   }

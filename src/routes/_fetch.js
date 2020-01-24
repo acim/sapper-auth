@@ -1,4 +1,4 @@
-export default async function restCall(url = "", method = "GET", data = {}) {
+export async function restCall(url = "", method = "GET", data = {}) {
   // try {
     const response = await fetch(url, {
       method,

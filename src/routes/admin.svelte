@@ -1,11 +1,13 @@
 <script context="module">
   export async function preload(page, session) {
-    console.log(session);
   }
 </script>
 
 <script>
   import { user } from "./_store.js";
+  import { goto } from "@sapper/app";
 </script>
 
-This is admin page {user.username}
+{#if $user}
+  This is protected page, you are {$user.username}
+{:else}{goto('/login')}{/if}
