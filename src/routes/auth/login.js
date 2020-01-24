@@ -1,5 +1,6 @@
 export function post(req, res) {
   const auth = req.body;
+  console.log(req.user)
   res.setHeader("Content-Type", "application/json");
 
   //   TODO: Handle authentication
