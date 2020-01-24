@@ -6,18 +6,13 @@ import cookieParser from "cookie-parser";
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
-const FileStore = sessionFileStore(session);
 
 express()
-  .use(bodyParser.json(), cookieParser())
+  .use(express.json(), cookieParser())
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
-    sapper.middleware({
-      session: req => ({
-        user: "Something I want"
-      })
-    })
+    sapper.middleware()
   )
   .listen(PORT, err => {
     if (err) console.log("error", err);

@@ -1,16 +1,29 @@
+import jwt from "jsonwebtoken";
+
+const generateToken = username => {
+  return jwt.sign({ username }, "4TvMZCZoBWfRrbK2e6xSIOoC1leN7pX9", {
+    subject: username, // FIXME: set user ID here
+    expiresIn: "1h"
+  });
+};
+
 export function post(req, res) {
   const auth = req.body;
-  console.log(req.user)
   res.setHeader("Content-Type", "application/json");
 
-  //   TODO: Handle authentication
+  //   TODO: Handle authentication properly
   if (auth.username === "admin" && auth.password === "123") {
-    res.json({
+    const token = generateToken(auth.username);
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 60 * 60 * 1000),
+      httpOnly: true
+    }).
+      end(JSON.stringify({
         user: {
           username: auth.username,
-          token: 123123123
+          token: token
         }
-    });
+      }));
     return;
   }
 
