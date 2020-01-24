@@ -20,7 +20,8 @@
       // errors = response.errors;
       if (json.user) {
         $user = response.user;
-        goto("/");
+        // user.set(response.user);
+        goto("/admin");
       }
     } catch (e) {
       console.log(e);
