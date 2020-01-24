@@ -1,21 +1,29 @@
 <script>
   import { goto } from "@sapper/app";
-  import { restCall } from "./_fetch.js";
   import { user } from "./_store.js";
 
   let username = "";
   let password = "";
 
   async function submit() {
-    const response = await restCall(`auth/login`, "POST", {
-      username,
-      password
-    });
-    // TODO handle network errors
-    // errors = response.errors;
-    if (response.user) {
-      $user = response.user;
-      goto("/");
+    try {
+      const response = await fetch("auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body:
+          username && password ? JSON.stringify({ username, password }) : null
+      });
+      const json = await response.json();
+      // TODO handle network errors
+      // errors = response.errors;
+      if (json.user) {
+        $user = response.user;
+        goto("/");
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 </script>

@@ -4,5 +4,5 @@ export function del(req, res) {
     .cookie("token", null, {
       maxAge: 0
     })
-    .end(JSON.stringify({}));
+    .redirect("/");
 }
