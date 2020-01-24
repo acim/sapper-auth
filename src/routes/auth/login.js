@@ -1,14 +1,15 @@
 export function post(req, res) {
-  const resBody = {
-    token: 123123123
-  };
-
   const auth = req.body;
   res.setHeader("Content-Type", "application/json");
 
-//   TODO: Handle authentication
+  //   TODO: Handle authentication
   if (auth.username === "admin" && auth.password === "123") {
-    res.json(resBody);
+    res.json({
+        user: {
+          username: auth.username,
+          token: 123123123
+        }
+    });
     return;
   }
 

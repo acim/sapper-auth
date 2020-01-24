@@ -11,7 +11,6 @@
     const response = await post(`auth/login`, "POST", { username, password });
     // TODO handle network errors
     // errors = response.errors;
-    console.log(response);
     if (response.user) {
       $session.user = response.user;
       goto("/");
