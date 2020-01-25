@@ -23,8 +23,8 @@ const getUser = req => {
     let decoded;
     try {
       decoded = jwt.verify(token, "4TvMZCZoBWfRrbK2e6xSIOoC1leN7pX9"); // FIXME: Get secret key from configuration
-    } catch (e) {
-      console.log("Error verifying JWT token", e);
+    } catch (err) {
+      console.log(err);
     }
 
     if (decoded) {
