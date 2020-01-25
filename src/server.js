@@ -35,15 +35,14 @@ const getUser = req => {
 };
 
 express()
-  .use(express.json(), cookieParser(), morgan("short"))
+  .use(express.json(), cookieParser(), morgan("short"), (req, res, next) => {
+    req.user = getUser(req);
+    next();
+  })
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
-    sapper.middleware({
-      session: req => ({
-        user: getUser(req)
-      })
-    })
+    sapper.middleware()
   )
   .listen(PORT, err => {
     if (err) console.log("error", err);

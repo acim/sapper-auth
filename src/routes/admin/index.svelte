@@ -1,7 +1,7 @@
 <script>
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
-  import { user } from "./_store.js";
+  import { user } from "../_store.js";
 
   onMount(() => {
     if (!$user) {
