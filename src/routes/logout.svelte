@@ -1,16 +1,19 @@
 <script>
-  import { user } from "./_store.js";
   import { goto } from "@sapper/app";
-  import { onMount } from "svelte";
+  import { user } from "./_store.js";
 
-  onMount(async () => {
-    localStorage.clear();
-    return await fetch("auth/logout", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: data ? JSON.stringify(data) : null
-    });
-  });
+  (async function logout() {
+    try {
+      await fetch("auth/logout", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  })();
+  $user = null;
+  goto("/");
 </script>

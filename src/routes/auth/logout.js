@@ -3,6 +3,5 @@ export function del(req, res) {
   res
     .cookie("token", null, {
       maxAge: 0
-    })
-    .redirect("/");
+    });
 }
