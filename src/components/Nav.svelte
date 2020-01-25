@@ -28,7 +28,7 @@
       <a class:selected={segment === 'admin'} href="admin">admin</a>
     </li>
     {#if $user}
-      <button class="button is-link" on:click={logout}>Logout</button>
+      <button type="submit" class="button is-small is-link" on:click={logout}>Logout</button>
     {/if}
   </ul>
 </nav>

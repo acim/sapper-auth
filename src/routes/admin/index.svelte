@@ -8,8 +8,41 @@
       goto("login");
     }
   });
+
+  async function fetchData() {
+    loading = true;
+    const res = await fetch("admin/config", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${$user.token}`
+      }
+    });
+    const data = await res.json();
+    loading = false;
+
+    if (res.ok) {
+      return data;
+    } else {
+      throw new Error(data);
+    }
+  }
+
+  let loading ;
 </script>
 
-{#if $user}This is protected page, you are {$user.username}.{/if}
+<button
+  type="submit"
+  class="button is-primary is-small"
+  class:is-loading={loading}
+  on:click={fetchData}>
+  Get config
+</button>
 
-<a href="/admin/config">Click here to fetch protected resourse</a>
+{#await fetchData()}
+{:then data}
+  Your username is: {data.username}
+{:catch error}
+  <p style="color: red">{error.message}</p>
+{/await}
+<hr>
+This is fetching resource /admin/config. Try to logout and to reach this resource by typing the url in your browser.
