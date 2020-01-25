@@ -10,4 +10,6 @@
   });
 </script>
 
-{#if $user}This is protected page, you are {$user.username}{/if}
+{#if $user}This is protected page, you are {$user.username}.{/if}
+
+<a href="/admin/config">Click here to fetch protected resourse</a>

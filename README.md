@@ -1,7 +1,5 @@
 # sapper-auth
 
-Sapper example application with authentication
+Sapper example application with JWT authentication
 
-- src/routes/login.svelte contains login form which gets submitted to auth/login
-- middlewares in /home/acim/Projects/public/sapper-auth/src/server.js takes care of the session
-- src/routes/auth/login.js takes care of login
+After successful login both header with token and cookie with token will be returned because in the following requests which may be rendered on the server JWT can't be sent by authorization header.
