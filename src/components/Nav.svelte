@@ -12,7 +12,7 @@
         }
       });
       $user = null;
-      goto("/");
+      goto(".");
     } catch (e) {
       console.log(e);
     }
@@ -28,7 +28,7 @@
       <a class:selected={segment === 'admin'} href="admin">admin</a>
     </li>
     {#if $user}
-      <a href="." on:click={logout}>logout</a>
+      <button class="button is-link" on:click={logout}>Logout</button>
     {/if}
   </ul>
 </nav>

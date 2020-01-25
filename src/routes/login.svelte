@@ -19,7 +19,7 @@
       // errors = response.errors;
       if (decode.user) {
         $user = decode.user;
-        goto("/admin");
+        goto("admin");
       }
     } catch (e) {
       console.log(e);

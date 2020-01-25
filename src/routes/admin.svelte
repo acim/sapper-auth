@@ -1,13 +1,13 @@
 <script>
-  import { user } from "./_store.js";
   import { goto } from "@sapper/app";
+  import { onMount } from "svelte";
+  import { user } from "./_store.js";
 
-  if (!$user) {
-    if (process.browser) {
-      goto("/login");
+  onMount(() => {
+    if (!$user) {
+      goto("login");
     }
-  }
-  console.log("admin.svelte-user: ", $user);
+  });
 </script>
 
-{#if process.browser}This is protected page, you are{/if}
+{#if $user}This is protected page, you are {$user.username}{/if}
