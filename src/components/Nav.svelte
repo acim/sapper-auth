@@ -1,6 +1,22 @@
 <script>
+  import { goto } from "@sapper/app";
   import { user } from "./../routes/_store.js";
   export let segment;
+
+  async function logout() {
+    try {
+      await fetch("auth/logout", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      $user = null;
+      goto("/");
+    } catch (e) {
+      console.log(e);
+    }
+  }
 </script>
 
 <nav>
@@ -12,7 +28,7 @@
       <a class:selected={segment === 'admin'} href="admin">admin</a>
     </li>
     {#if $user}
-      <a href="logout">logout</a>
+      <a href="." on:click={logout}>logout</a>
     {/if}
   </ul>
 </nav>

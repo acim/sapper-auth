@@ -4,6 +4,7 @@ import compression from "compression";
 import * as sapper from "@sapper/server";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import morgan from "morgan";
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
@@ -34,12 +35,12 @@ const getUser = req => {
 };
 
 express()
-  .use(express.json(), cookieParser())
+  .use(express.json(), cookieParser(), morgan("short"))
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
     sapper.middleware({
-      session: (req, res) => ({
+      session: req => ({
         user: getUser(req)
       })
     })
