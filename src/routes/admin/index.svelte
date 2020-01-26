@@ -27,7 +27,7 @@
     }
   }
 
-  let loading ;
+  let loading;
 </script>
 
 <button
@@ -38,11 +38,9 @@
   Get config
 </button>
 
-{#await fetchData()}
-{:then data}
-  Your username is: {data.username}
-{:catch error}
-  <p style="color: red">{error.message}</p>
-{/await}
-<hr>
-This is fetching resource /admin/config. Try to logout and to reach this resource by typing the url in your browser.
+{#if process.browser}
+{#await fetchData() then data}Your username is: {data.username}{/await}
+<hr />
+This is fetching resource /admin/config. Try to logout and to reach this
+resource by typing the url in your browser.
+{/if}
